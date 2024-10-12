@@ -1,0 +1,64 @@
+.navbar {
+    padding-left: 80px; /* Space for the brand */
+}
+
+.navbar-brand {
+    font-size: 1.75rem; /* Brand font size */
+    left: 1rem; /* Adjust spacing from the left */
+}
+
+.nav-link {
+    font-size: 1.75rem; /* Default size for nav links */
+    color: white; /* Default color for nav links */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.nav-link i {
+    margin-right: 8px; /* Space between icon and text */
+    color: grey; /* Red color for all icons */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+.nav-link .yt {
+    margin-right: 8px; /* Space between icon and text */
+    color: #FF0000; /* Red color for all icons */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.nav-link:hover {
+    color: grey; /* Change text color on hover */
+}
+
+.nav-link:hover i{
+    color: darkgray; /* Darker red for icons on hover */
+}
+
+
+.nav-link:hover .yt{
+    color: darkred; /* Darker red for icons on hover */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        padding-left: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .nav-link {
+        font-size: 1.5rem; /* Smaller size for tablets */
+    }
+}
+
+@media (max-width: 580px) {
+    .nav-link {
+        font-size: 1.25rem; /* Smaller size for mobile */
+    }
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+    color: white; /* White text */
+    position: relative; /* Position relative to other elements */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+    font-family: 'Roboto Mono', monospace;
+}

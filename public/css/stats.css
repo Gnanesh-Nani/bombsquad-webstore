@@ -1,0 +1,141 @@
+html,
+body {
+    height: 100%; /* Keep height 100% for html and body */
+    margin: 0; /* Remove default margin */
+    overflow: auto; /* Enable scrolling */
+}
+
+.bg-image {
+    background-image: url('https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg'); /* Replace with your image URL */
+    background-size: auto; /* Set to auto to allow repeating */
+    background-repeat: repeat; /* Repeat the image */
+    height: auto; /* Allow height to be determined by content */
+    min-height: 100vh; /* Minimum height of 100vh */
+    position: relative; /* Set position to relative for the pseudo-element */
+}
+
+/* Create a smudge effect at the connection points */
+.bg-image::after {
+    content: ""; /* Create an empty pseudo-element */
+    position: absolute; /* Position it absolutely */
+    top: 0; /* Start at the top */
+    left: 0; /* Start at the left */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.8), /* Adjust color and opacity */
+        rgba(255, 255, 255, 0.8)
+    ); /* Create a gradient for blending */
+    pointer-events: none; /* Allow clicks to pass through */
+    mix-blend-mode: overlay; /* Use overlay for blending */
+    filter: blur(8px); /* Apply blur to create the smudge effect */
+    z-index: 1; /* Ensure it's above the background */
+}
+
+.content {
+    position: relative; /* Ensure content is above the smudge effect */
+    z-index: 2; /* Position content above the smudge */
+    padding: 20px; /* Add padding for content */
+}
+
+
+.intro {
+  /* Remove height: 100% */
+  padding-top: 10px; /* Add padding to prevent overlap with navbar */
+}
+
+h1 {
+  font-family: 'Russo One', cursive;
+  font-size: 70px; /* Default size for larger screens */
+  text-align: center; /* Center the heading */
+  margin-bottom: 20px; /* Add some space below the heading */
+}
+
+@media (max-width: 768px) { /* Adjust for tablets */
+  h1 {
+      font-size: 60px; /* Smaller size for tablets */
+  }
+}
+
+@media (max-width: 580px) { /* Adjust for mobile devices */
+  h1 {
+      font-size: 40px; /* Even smaller size for mobile */
+  }
+}
+
+table {
+  width: 100%; /* Ensure the table takes full width */
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: 'Roboto Mono', monospace; /* Use a monospace font for table data */
+}
+
+table th {
+  background-color: rgba(52, 58, 64, 0.9); /* Dark background for header */
+  color: white; /* White text color for contrast */
+  font-weight: bold; /* Bold font for emphasis */
+  padding: 12px 8px; /* Padding for better spacing */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Bottom border for separation */
+  text-align: center; /* Center text alignment */
+}
+
+table td {
+  padding: 10px 8px; /* Add padding to table cells for better spacing */
+}
+
+.mask-custom {
+  background: rgba(24, 24, 16, .2);
+  border-radius: 2em;
+  backdrop-filter: blur(25px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+
+/* Additional styles for better readability */
+table {
+  border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+table th, table td {
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for cells */
+}
+
+/* Optional: Add a hover effect for table rows */
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+}
+.top-player {
+  background-color: rgba(255, 223, 0, 0.6); /* Light yellow for 1st place */
+  font-weight: 700; /* Bold font weight */
+  font-size: 1.2em; /* Increase font size for emphasis */
+  color: #4e3b00; /* Darker brown for better contrast */
+}
+
+.second-player {
+  background-color: rgba(192, 192, 192, 0.6); /* Light gray for 2nd place */
+  font-weight: 700; /* Bold font weight */
+  font-size: 1.2em; /* Increase font size for emphasis */
+  color: #303030; /* Darker gray for better contrast */
+}
+
+.third-player {
+  background-color: rgba(205, 127, 50, 0.6); /* Light bronze for 3rd place */
+  font-weight: 700; /* Bold font weight */
+  font-size: 1.2em; /* Increase font size for emphasis */
+  color: #3b2f1f; /* Darker brown for better contrast */
+}
+
+.text-bronze {
+  color: #cd7f32; /* Bronze color for the 3rd place icon */
+}
+
+.icon-large {
+    font-size: 30px; /* Adjust size as needed */
+    margin-right: 5px; /* Space between icon and text */
+}

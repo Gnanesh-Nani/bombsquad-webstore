@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Player Stats</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/stats.css">
+        <link rel="stylesheet" href="/css/navbar-footer.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    
+<body style="background-image: url(https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg);">
+    <%- include('./partials/navbar') %>
+    <h1 class="text-white text-center my-4">MR RIP-TEAM-STATS</h1>
+    <section class="intro">
+        <div class="bg-image h-100" >
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card mask-custom">
+                                <div class="card-body">
+                                    <h5 class="text-white">Start Date: <%= stats.startDate %></h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless text-white mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Rank</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Scores</th>
+                                                    <th scope="col">K/D</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Kills</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Deaths</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Games</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Average Score</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Last Seen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for (let playerId in stats.stats) { %>
+                                                    <tr class="<%= stats.stats[playerId].rank === 1 ? 'top-player' : stats.stats[playerId].rank === 2 ? 'second-player' : stats.stats[playerId].rank === 3 ? 'third-player' : '' %>">
+                                                        <th scope="row">
+                                                            <%= stats.stats[playerId].rank %>
+                                                            <% if (stats.stats[playerId].rank === 1) { %>
+                                                                <i class="fas fa-trophy text-warning icon-large" ></i>
+                                                            <% } else if (stats.stats[playerId].rank === 2) { %>
+                                                                <i class="fas fa-medal text-secondary icon-large"></i>
+                                                            <% } else if (stats.stats[playerId].rank === 3) { %>
+                                                                <i class="fas fa-award text-bronze icon-large"></i>
+                                                            <% } %>
+                                                        </th>
+                                                        <td><%= stats.stats[playerId].name %></td>
+                                                        <td><%= stats.stats[playerId].scores %></td>
+                                                        <td><%= stats.stats[playerId].kd %></td>
+                                                        <td class="d-none d-md-table-cell"><%= stats.stats[playerId].kills %></td>
+                                                        <td class="d-none d-md-table-cell"><%= stats.stats[playerId].deaths %></td>
+                                                        <td class="d-none d-md-table-cell"><%= stats.stats[playerId].games %></td>
+                                                        <td class="d-none d-md-table-cell"><%= stats.stats[playerId].avg_score %></td>
+                                                        <td class="d-none d-md-table-cell">
+                                                            <%= new Date(stats.stats[playerId].last_seen).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: '2-digit' }) %>
+                                                        </td>                                                        
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include('./partials/footer') %>
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
