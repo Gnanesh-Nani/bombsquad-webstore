@@ -3,15 +3,24 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
+
+// Initialize a variable to keep track of visits
+let visitorCount = 0;
+
 // Route to get player stats
 router.get('/', (req, res) => {
+    // Increment visitor count
+    visitorCount++;
+
     const statsFilePath = path.join(__dirname, '../stats.json');
+    let error = null; // Initialize the error variable
 
     // Asynchronously read your stats.json file
     fs.readFile(statsFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error("Error reading stats.json:", err);
-            return res.status(500).send("Internal Server Error");
+            error = "Unable to load stats data."; // Set error message
+            return res.render('stats', { stats: null, visitorCount, session: req.session, error }); // Pass the error to the view
         }
 
         let stats;
@@ -36,11 +45,12 @@ router.get('/', (req, res) => {
 
         } catch (parseErr) {
             console.error("Error parsing stats.json:", parseErr);
-            return res.status(500).send("Error parsing stats data");
+            error = "Error parsing stats data"; // Set error message
+            return res.render('stats', { stats: null, visitorCount, session: req.session, error }); // Pass the error to the view
         }
 
-        // Render the stats page with the parsed data
-        res.render('stats', { stats });
+        // Render the stats page with the parsed data, visitorCount, and session
+        res.render('stats', { stats, visitorCount, session: req.session, error:error });
     });
 });
 

@@ -15,8 +15,11 @@
 </head>
 
 <body style="background-image: url(https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg);">
-    <%- include('./partials/navbar') %>
-    <h1 class="text-white text-center my-4">MR RIP SHOP</h1>
+    <%- include('./partials/navbar', { session: session, error: error }) %>
+
+    <h1 class="text-white text-center my-4">
+        MR RIP SHOP
+    </h1>
 
     <div class="shop-container">
         <% items.forEach((item, index) => { %>
@@ -36,82 +39,136 @@
                         <input type="number" id="days-<%= index %>" value="1" min="1" style="width: 50px; height: 25px; text-align: center; border: 1px solid #ced4da; margin-left: 5px;">
                     </div>
     
+                    <!-- Button to buy the effect -->
                     <button class="btn btn-warning btn-block" onclick="buyItem('<%= item.image.split('/').pop() %>', <%= item.price %>, document.getElementById('days-<%= index %>').value)">Buy Now</button>
                 </div>
             </div>
-        <% }); %>
-    </div>
-    
-    <!-- Modal HTML -->
-    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 15px;">
-                <div class="modal-header" style="border-bottom: none;">
-                    <h5 class="modal-title" style="color: #333; font-family: 'Russo One', sans-serif;">Login to Purchase</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #333;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="pb-id" style="color: #333;">PB-ID:</label>
-                            <input type="text" class="form-control" id="pb-id" name="pb-id" required style="border-radius: 10px;">
-                        </div>
-                        <div class="form-group">
-                            <label for="password" style="color: #333;">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required style="border-radius: 10px;">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block" style="background-color: #ffc107; border: none; border-radius: 10px;">Login</button>
-                    </form>
-                    <small class="form-text text-muted" style="text-align: center; display: block; margin-top: 10px;">
-                        Note: Grab your PB-ID and password from the server using the <code>/password</code> command.
-                    </small>
+            <% }); %>
+            <!-- Separate card for tag -->
+            <div class="shop-card" style="overflow-y: auto;">
+                <img src="/images/effects/tag.png" alt="Tag Img" style="max-height: 3500px; width: fit; display: block; margin: 0 auto;">
+                <div class="shop-card-body" style="text-align: center;">
+                    <h5 class="shop-card-title my-0">Tag: </h5>
+                    <p class="shop-card-price">
+                        Price: 100
+                        <img src="https://static.wikia.nocookie.net/bombsquad/images/1/14/Tickets.png" alt="BombSquad Ticket Icon" style="width: 20px; height: auto;">
+                        / Day
+                    </p>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <h5 style="margin: 3;">Days: </h5>
+                        <input type="number" id="days" value="1" min="1" style="width: 50px; height: 25px; text-align: center; border: 1px solid #ced4da; margin-left: 5px;">
+                    </div>
+            
+                    <input type="text" id="tag" placeholder="Enter your tag" style="width: calc(100% - 22px); height: 30px; border: 1px solid #ced4da; padding: 5px; margin-top: 5px;">
+            
+                    <!-- Color selector for the tag -->
+                    <div style="margin-top: 5px;">
+                        <label for="tagColor" style="margin-right: 5px;">Select Color:</label>
+                        <input type="color" id="tagColor" value="#ffffff" style="border: 1px solid #ced4da;">
+                    </div>
+            
+                    <button class="btn btn-warning btn-block mt-1" onclick="buyTag(document.getElementById('tag').value, document.getElementById('tagColor').value)">Buy Tag</button>
                 </div>
             </div>
-        </div>
+            
+            
     </div>
     
+
     <%- include('./partials/footer') %>
 
     <!-- Bootstrap JS and dependencies (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Use the full version of jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-        function buyItem(itemName, itemPrice) {
-            // Show the modal using Bootstrap's modal function
-            $('#loginModal').modal('show');
+    <script defer>
+        // Check if user is logged in
+        const isLoggedIn = <%= session.user ? 'true' : 'false' %>;
 
-            // Handle form submission
-            $('#loginForm').off('submit').on('submit', function(event) {
-                event.preventDefault();
-                const pbId = $('#pb-id').val();
-                const password = $('#password').val();
+        // Get the player PB-ID
+        const pbId = '<%= session.user ? session.user.pbid.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : null %>';
 
-                // Send a POST request to verify credentials
-                fetch('/verify-credentials', {
+        function buyItem(itemName, price, days) {
+            if (!isLoggedIn) {
+                // Show login modal if not logged in
+                $('#loginModal').modal('show');
+            } else {
+                // Proceed with buying item
+                fetch('/shop/buy', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ pbId, password, itemName, itemPrice })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Purchase successful!');
-                        // Proceed with the purchase (reduce tickets, add effect, etc.)
-                        $('#loginModal').modal('hide'); // Close the modal after successful login
+                    body: JSON.stringify({
+                        pbId: pbId,
+                        itemName: itemName.replace('.png', ''),
+                        price: price,
+                        days: days
+                    })
+                }).then(response => {
+
+                    // Check if the response is JSON
+                    if (response.headers.get('content-type').includes('application/json')) {
+                        return response.json();
                     } else {
-                        alert('Invalid credentials. Please try again.');
+                        throw new Error('Expected JSON response');
                     }
+                }).then(data => {
+                    if (data.success) {
+                            alert("Purchase Sucessfull :" + data.message); // Show success message
+                            window.location.href = window.location.href; // Redirect to shop page
+                        } else {
+                            alert("Purchase Failed : "+ data.message); // Show error message
+                        }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        }
+    function buyTag(tag, color) {
+        if (!isLoggedIn) {
+            $('#loginModal').modal('show');
+        } else {
+            const days = document.getElementById('days').value; // Get the number of days for the purchase
+            const price = 100; // Assuming the price for the tag is constant at 100
+
+            fetch('/shop/buyTag', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pbId: pbId,
+                    tagName: tag, // The name of the tag
+                    price: price,
+                    days: days,
+                    color:color
                 })
-                .catch(error => console.error('Error:', error));
+            })
+            .then(response => {
+
+                if (response.headers.get('content-type').includes('application/json')) {
+                    return response.json();
+                } else {
+                    throw new Error('Expected JSON response');
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                            alert("Purchase Sucessfull : " + data.message); // Show success message
+                            window.location.href = window.location.href; // Redirect to shop page
+                        } else {
+                            alert("Purchase Failed : " + data.message); // Show error message
+                        }
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         }
+    }
+
+        
     </script>
 </body>
-
 </html>

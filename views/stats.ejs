@@ -14,7 +14,7 @@
     </head>
     
 <body style="background-image: url(https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg);">
-    <%- include('./partials/navbar') %>
+    <%- include('./partials/navbar', { session: session, error: error }) %>
     <h1 class="text-white text-center my-4">MR RIP-TEAM-STATS</h1>
     <section class="intro">
         <div class="bg-image h-100" >
@@ -25,6 +25,10 @@
                             <div class="card mask-custom">
                                 <div class="card-body">
                                     <h5 class="text-white">Start Date: <%= stats.startDate %><br></h5>
+                                    <p class="text-white">
+                                        <i class="fas fa-eye" style="color: #007bff;"></i> <!-- Eye icon -->
+                                        Visits: <%= visitorCount %>
+                                    </p>
                                     <div class="table-responsive">
                                         <table class="table table-borderless text-white mb-0">
                                             <thead>
