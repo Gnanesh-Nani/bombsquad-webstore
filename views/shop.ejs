@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Shop</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/shop.css">
+    <link rel="stylesheet" href="/css/navbar-footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-shopp
+
+<body style="background-image: url(https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg);">
+    <%- include('./partials/navbar') %>
+    <h1 class="text-white text-center my-4">MR RIP SHOP</h1>
+
+    <div class="shop-container">
+        <% items.forEach((item, index) => { %>
+            <div class="shop-card">
+                <img src="<%= item.image %>" alt="Shop Item <%= index + 1 %>">
+                <div class="shop-card-body">
+                    <h5 class="shop-card-title">Effect: <%= item.image.split('/').pop().replace('.png', '') %></h5>
+                    <p class="shop-card-price">
+                        Price: <%= item.price %>
+                        <img src="https://static.wikia.nocookie.net/bombsquad/images/1/14/Tickets.png" alt="BombSquad Ticket Icon" style="width: 20px; height: auto;">
+                        / Day
+                    </p>
+    
+                    <!-- Flexbox for Days label and input -->
+                    <div style="display: flex; align-items: center;">
+                        <p style="margin: 5;">Days: </p>
+                        <input type="number" id="days-<%= index %>" value="1" min="1" style="width: 50px; height: 25px; text-align: center; border: 1px solid #ced4da; margin-left: 5px;">
+                    </div>
+    
+                    <button class="btn btn-warning btn-block" onclick="buyItem('<%= item.image.split('/').pop() %>', <%= item.price %>, document.getElementById('days-<%= index %>').value)">Buy Now</button>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    
+    <!-- Modal HTML -->
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 15px;">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h5 class="modal-title" style="color: #333; font-family: 'Russo One', sans-serif;">Login to Purchase</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #333;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="pb-id" style="color: #333;">PB-ID:</label>
+                            <input type="text" class="form-control" id="pb-id" name="pb-id" required style="border-radius: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" style="color: #333;">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required style="border-radius: 10px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="background-color: #ffc107; border: none; border-radius: 10px;">Login</button>
+                    </form>
+                    <small class="form-text text-muted" style="text-align: center; display: block; margin-top: 10px;">
+                        Note: Grab your PB-ID and password from the server using the <code>/password</code> command.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('./partials/footer') %>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function buyItem(itemName, itemPrice) {
+            // Show the modal using Bootstrap's modal function
+            $('#loginModal').modal('show');
+
+            // Handle form submission
+            $('#loginForm').off('submit').on('submit', function(event) {
+                event.preventDefault();
+                const pbId = $('#pb-id').val();
+                const password = $('#password').val();
+
+                // Send a POST request to verify credentials
+                fetch('/verify-credentials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ pbId, password, itemName, itemPrice })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Purchase successful!');
+                        // Proceed with the purchase (reduce tickets, add effect, etc.)
+                        $('#loginModal').modal('hide'); // Close the modal after successful login
+                    } else {
+                        alert('Invalid credentials. Please try again.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        }
+    </script>
 </body>
+
 </html>

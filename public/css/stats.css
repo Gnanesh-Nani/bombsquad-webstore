@@ -7,8 +7,8 @@ body {
 
 .bg-image {
     background-image: url('https://mdbootstrap.com/img/Photos/new-templates/glassmorphism-article/img7.jpg'); /* Replace with your image URL */
-    background-size: auto; /* Set to auto to allow repeating */
-    background-repeat: repeat; /* Repeat the image */
+    background-size: cover; /* Use cover for a better fit */
+    background-position: center; /* Center the background image */
     height: auto; /* Allow height to be determined by content */
     min-height: 100vh; /* Minimum height of 100vh */
     position: relative; /* Set position to relative for the pseudo-element */
@@ -38,104 +38,112 @@ body {
     padding: 20px; /* Add padding for content */
 }
 
-
 .intro {
-  /* Remove height: 100% */
-  padding-top: 10px; /* Add padding to prevent overlap with navbar */
+    padding-top: 10px; /* Add padding to prevent overlap with navbar */
 }
 
 h1 {
-  font-family: 'Russo One', cursive;
-  font-size: 70px; /* Default size for larger screens */
-  text-align: center; /* Center the heading */
-  margin-bottom: 20px; /* Add some space below the heading */
+    font-family: 'Russo One', cursive;
+    font-size: 70px; /* Default size for larger screens */
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Add some space below the heading */
 }
 
 @media (max-width: 768px) { /* Adjust for tablets */
-  h1 {
-      font-size: 60px; /* Smaller size for tablets */
-  }
+    h1 {
+        font-size: 60px; /* Smaller size for tablets */
+    }
 }
 
 @media (max-width: 580px) { /* Adjust for mobile devices */
-  h1 {
-      font-size: 40px; /* Even smaller size for mobile */
-  }
+    h1 {
+        font-size: 40px; /* Even smaller size for mobile */
+    }
 }
 
 table {
-  width: 100%; /* Ensure the table takes full width */
+    width: 100%; /* Ensure the table takes full width */
+    border-collapse: collapse; /* Ensure borders are collapsed */
 }
 
 table td,
 table th {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  font-family: 'Roboto Mono', monospace; /* Use a monospace font for table data */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'Roboto Mono', monospace; /* Use a monospace font for table data */
 }
 
 table th {
-  background-color: rgba(52, 58, 64, 0.9); /* Dark background for header */
-  color: white; /* White text color for contrast */
-  font-weight: bold; /* Bold font for emphasis */
-  padding: 12px 8px; /* Padding for better spacing */
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Bottom border for separation */
-  text-align: center; /* Center text alignment */
+    background-color: rgba(52, 58, 64, 0.9); /* Dark background for header */
+    color: white; /* White text color for contrast */
+    font-weight: bold; /* Bold font for emphasis */
+    padding: 12px 8px; /* Padding for better spacing */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Bottom border for separation */
+    text-align: center; /* Center text alignment */
 }
 
 table td {
-  padding: 10px 8px; /* Add padding to table cells for better spacing */
-}
-
-.mask-custom {
-  background: rgba(24, 24, 16, .2);
-  border-radius: 2em;
-  backdrop-filter: blur(25px);
-  border: 2px solid rgba(255, 255, 255, 0.05);
-  background-clip: padding-box;
-  box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
-}
-
-/* Additional styles for better readability */
-table {
-  border-collapse: collapse; /* Ensure borders are collapsed */
-}
-
-table th, table td {
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for cells */
+    padding: 10px 8px; /* Add padding to table cells for better spacing */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for cells */
 }
 
 /* Optional: Add a hover effect for table rows */
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+    background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
 }
+
+.mask-custom {
+    background: rgba(24, 24, 16, .2);
+    border-radius: 2em;
+    backdrop-filter: blur(25px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+
 .top-player {
-  background-color: rgba(255, 223, 0, 0.6); /* Light yellow for 1st place */
-  font-weight: 700; /* Bold font weight */
-  font-size: 1.2em; /* Increase font size for emphasis */
-  color: #4e3b00; /* Darker brown for better contrast */
+    background-color: rgba(255, 223, 0, 0.6); /* Light yellow for 1st place */
+    font-weight: 700; /* Bold font weight */
+    font-size: 1.2em; /* Increase font size for emphasis */
+    color: #4e3b00; /* Darker brown for better contrast */
 }
 
 .second-player {
-  background-color: rgba(192, 192, 192, 0.6); /* Light gray for 2nd place */
-  font-weight: 700; /* Bold font weight */
-  font-size: 1.2em; /* Increase font size for emphasis */
-  color: #303030; /* Darker gray for better contrast */
+    background-color: rgba(192, 192, 192, 0.6); /* Light gray for 2nd place */
+    font-weight: 700; /* Bold font weight */
+    font-size: 1.2em; /* Increase font size for emphasis */
+    color: #303030; /* Darker gray for better contrast */
 }
 
 .third-player {
-  background-color: rgba(205, 127, 50, 0.6); /* Light bronze for 3rd place */
-  font-weight: 700; /* Bold font weight */
-  font-size: 1.2em; /* Increase font size for emphasis */
-  color: #3b2f1f; /* Darker brown for better contrast */
+    background-color: rgba(205, 127, 50, 0.6); /* Light bronze for 3rd place */
+    font-weight: 700; /* Bold font weight */
+    font-size: 1.2em; /* Increase font size for emphasis */
+    color: #3b2f1f; /* Darker brown for better contrast */
 }
 
 .text-bronze {
-  color: #cd7f32; /* Bronze color for the 3rd place icon */
+    color: #cd7f32; /* Bronze color for the 3rd place icon */
 }
 
 .icon-large {
     font-size: 30px; /* Adjust size as needed */
     margin-right: 5px; /* Space between icon and text */
+}
+
+/* Responsive table */
+@media (max-width: 580px) {
+    table th, table td {
+        font-size: 14px; /* Adjust font size for small screens */
+        padding: 8px; /* Adjust padding for small screens */
+    }
+
+    h1 {
+        font-size: 30px; /* Further reduce size for very small screens */
+    }
+
+    .content {
+        padding: 10px; /* Reduce padding for small screens */
+    }
 }
