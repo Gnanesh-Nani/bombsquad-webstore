@@ -72,7 +72,7 @@ app.post('/login', (req, res) => {
         } else {
             // Redirect back with an error message (optional)
             const referer = req.get('Referer') || '/stats'; // Default to home if referer is not available
-            res.alert('Invalid credentials'); // Using express-flash for error messaging (optional)
+            //res.alert('Invalid credentials'); // Using express-flash for error messaging (optional)
             return res.redirect(referer); // Redirect back to the previous page
         }
     });
@@ -80,5 +80,5 @@ app.post('/login', (req, res) => {
 
 // Start the server
 app.listen(PORT,'0.0.0.0', () => {
-    console.log(`Server is running on http://51.79.248.119:${PORT}/stats`);
+    console.log(`Server is running on http://localhost:${PORT}/stats`);
 });

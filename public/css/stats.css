@@ -147,3 +147,29 @@ tbody tr:hover {
         padding: 10px; /* Reduce padding for small screens */
     }
 }
+
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+
+.blink-row {
+    animation: blink-animation 1s steps(30, start) infinite;
+}
+@keyframes blink-animation {
+    0% {
+        background-color: rgba(79, 19, 80, 0.3); /* Starting color */
+    }
+    50% {
+        background-color: rgba(185, 2, 252, 0.5); /* Blink color (light cyan) */
+    }
+    100% {
+        background-color: rgba(65, 21, 86, 0.3); /* Return to starting color */
+    }
+}

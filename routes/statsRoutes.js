@@ -15,6 +15,9 @@ router.get('/', (req, res) => {
     const statsFilePath = path.join(__dirname, '../stats.json');
     let error = null; // Initialize the error variable
 
+    let accountID = req.query.account;
+    
+
     // Asynchronously read your stats.json file
     fs.readFile(statsFilePath, 'utf8', (err, data) => {
         if (err) {
@@ -50,7 +53,7 @@ router.get('/', (req, res) => {
         }
 
         // Render the stats page with the parsed data, visitorCount, and session
-        res.render('stats', { stats, visitorCount, session: req.session, error:error });
+        res.render('stats', { stats, visitorCount, session: req.session, error:error ,accountID});
     });
 });
 
