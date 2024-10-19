@@ -8,7 +8,7 @@ const tinycolor = require("tinycolor2");
 
 
 // Define the path to your bank.json file
-const bankFilePath = path.join(__dirname, '../bank.json');
+const bankFilePath = path.join(__dirname, '../../bombsquad/Bombsquad-Ballistica-Modded-Server/dist/ba_root/mods/shop/bank.json');
 
 async function updateBankFile(pbId, itemName, price, days) {
     try {
@@ -58,7 +58,7 @@ async function updateBankFile(pbId, itemName, price, days) {
 
         // Release the lock after updating
         await release();
-
+        console.log(`This ${pbId} Purchased ${itemName} for ${days}`);
         return { success: true, message: 'Purchase completed successfully!' };
     } catch (error) {
         console.error('Error updating bank.json:', error);

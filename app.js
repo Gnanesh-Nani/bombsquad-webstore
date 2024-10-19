@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 // Login route
 app.post('/login', (req, res) => {
     const { pbid, password } = req.body; // Get player ID and password from the request
-    const bankFilePath = path.join(__dirname, 'bank.json');
+    const bankFilePath = path.join(__dirname, '../bombsquad/Bombsquad-Ballistica-Modded-Server/dist/ba_root/mods/shop/bank.json');
 
     // Read the bank.json file
     fs.readFile(bankFilePath, 'utf8', (err, data) => {
@@ -80,5 +80,5 @@ app.post('/login', (req, res) => {
 
 // Start the server
 app.listen(PORT,'0.0.0.0', () => {
-    console.log(`Server is running on http://localhost:${PORT}/stats`);
+    console.log(`Server is running on http://51.79.248.119:${PORT}/stats`);
 });
