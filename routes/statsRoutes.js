@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     // Increment visitor count
     visitorCount++;
 
-    const statsFilePath = path.join(__dirname, '../../bombsquad/Bombsquad-Ballistica-Modded-Server/dist/ba_root/mods/stats/stats.json');
+    const statsFilePath = path.join(__dirname, '../stats.json');
     let error = null; // Initialize the error variable
 
     let accountID = req.query.account;
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
     // If the accountID is present in the query, automatically log in the user
     if (accountID) {
-        const bankFilePath = path.join(__dirname, '../../bombsquad/Bombsquad-Ballistica-Modded-Server/dist/ba_root/mods/shop/bank.json');
+        const bankFilePath = path.join(__dirname, '../bank.json');
 
         // Read the bank.json file to validate the account ID
         fs.readFile(bankFilePath, 'utf8', (err, data) => {
